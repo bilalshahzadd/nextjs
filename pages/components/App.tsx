@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import Modal from "./Modal";
+
 
 export default function App() {
 
@@ -8,12 +10,20 @@ export default function App() {
         modal.classList.toggle('hidden');
     }
 
-    // storing the needed amount in a variable to update it later
+    // variable to store the needed amount so we can update it later 
     let neededAmount = 167;
 
-    // function to perform the sum between the donated amount and the needed amount
-    function subtractAmount() {
+    // function to update the amount 
+    function updateAmount() {
+
         // selecting the html input value
+        const amount = document.getElementById('amount') as HTMLInputElement;
+
+        // taking the sum of both values
+        neededAmount -= amount.valueAsNumber;
+
+        // updating the neededAmount
+        console.log(neededAmount);
     }
 
     return (
@@ -58,12 +68,11 @@ export default function App() {
                                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                         <span className="text-gray-500 sm:text-sm">$</span>
                                     </div>
-                                    <form action="#" className="flex w-96">
-                                        <input type="text" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border rounded" />
-                                        <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded'>Give Now</button>
-                                    </form>
+                                    <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border rounded apperance" />
                                 </div>
                             </div>
+
+                            <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' onClick={updateAmount}>Give Now</button>
 
                         </div>
 
