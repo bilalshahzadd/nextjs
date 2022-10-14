@@ -13,7 +13,7 @@ export default function App() {
 
     // function to perform the sum between the donated amount and the needed amount
     function subtractAmount() {
-
+        // selecting the html input value
     }
 
     return (

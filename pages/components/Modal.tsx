@@ -20,7 +20,7 @@ export default function Modal() {
                         </div>
                         <div className='bg-gray-200 px-4 py-3 text-right'>
                             <button type='button' className='py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2' onClick={toggleModal}>
-                                <i className='fas fa-times'></i> Close</button>
+                             <i className='fas fa-times'></i> Close</button>
                         </div>
                     </div>
                 </div>
