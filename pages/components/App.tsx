@@ -24,6 +24,14 @@ export default function App() {
 
         // updating the neededAmount
         console.log(neededAmount);
+
+        // selecting the tooltip box
+        const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
+
+        // tooltip will be set to display none when the amount is fully funded
+        if (neededAmount === 0) {
+            tooltip.style.display = 'none';
+        }
     }
 
     return (
@@ -32,7 +40,7 @@ export default function App() {
             <div className='flex flex-col justify-center items-center h-screen'>
 
                 {/* tooltip box */}
-                <div className='w-96 mb-3'>
+                <div className='w-96 mb-3' id='tooltipBox'>
                     <div>
                         <div className="mx-auto container px-4 py-4 bg-[#424242] rounded relative">
                             <p className=" text-xs font-bold text-white pt-2 pb-2">${neededAmount} still needed for this project</p>
