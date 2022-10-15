@@ -19,11 +19,20 @@ export default function App() {
         // selecting the html input value
         const amount = document.getElementById('amount') as HTMLInputElement;
 
-        // subtracting the amount from the needed amount
+        // selecting the element to update the value
+        const elem = document.getElementById('neededAmount') as HTMLSpanElement;
+
+        // selecting the innerHTML to parse 
+        const value = elem.innerHTML;
+
+        // updating the amount 
         neededAmount -= amount.valueAsNumber;
 
-        // updating the neededAmount
-        console.log(neededAmount);
+        // converting the numeric value into string
+        const convertedNumber = neededAmount.toString();
+
+        // displaying the data
+        elem.innerHTML = convertedNumber;
 
         // selecting the tooltip box
         const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
@@ -43,7 +52,7 @@ export default function App() {
                 <div className='w-96 mb-3' id='tooltipBox'>
                     <div>
                         <div className="mx-auto container px-4 py-4 bg-[#424242] rounded relative">
-                            <p className=" text-xs font-bold text-white pt-2 pb-2">${neededAmount} still needed for this project</p>
+                            <p className=" text-xs font-bold text-white pt-2 pb-2">$<span id='neededAmount'>{neededAmount}</span> still needed for this project</p>
                             <svg className="absolute z-10  bottom-[-10px] " width={16} height={10} viewBox="0 0 16 10" fill="#424242" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8 10L0 0L16 1.41326e-06L8 10Z" fill="#424242" />
                             </svg>
