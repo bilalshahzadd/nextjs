@@ -19,7 +19,7 @@ export default function App() {
         // selecting the html input value
         const amount = document.getElementById('amount') as HTMLInputElement;
 
-        // taking the sum of both values
+        // subtracting the amount from the needed amount
         neededAmount -= amount.valueAsNumber;
 
         // updating the neededAmount
@@ -28,7 +28,7 @@ export default function App() {
         // selecting the tooltip box
         const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
 
-        // tooltip will be set to display none when the amount is fully funded
+        // tooltip will be set to display none when the amount is reached the limit
         if (neededAmount === 0) {
             tooltip.style.display = 'none';
         }
