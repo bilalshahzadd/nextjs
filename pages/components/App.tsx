@@ -34,14 +34,20 @@ export default function App() {
         // displaying the data
         elem.innerHTML = convertedNumber;
 
+        // moving the progression bar
+        const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
+
         // selecting the tooltip box
         const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
 
         // tooltip will be set to display none when the amount is reached the limit
-        if (neededAmount === 0) {
+        if (neededAmount == 0) {
             tooltip.style.display = 'none';
+            progressBar.style.width = 100 + '%';
+            progressBar.style.backgroundColor = '#00be1c';
         }
     }
+
 
     return (
         <>
@@ -65,7 +71,7 @@ export default function App() {
 
                     {/* progress bar here */}
                     <div className='progress-bar-container w-96 h-5 border'>
-                        <div className='progress-bar bg-[#f15e33] w-80 h-5'></div>
+                        <div className='progress-bar bg-[#f15e33] w-10 h-5' id='progress-bar'></div>
                     </div>
 
                     {/* text blocks here */}
