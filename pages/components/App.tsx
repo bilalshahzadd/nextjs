@@ -40,11 +40,15 @@ export default function App() {
         // selecting the tooltip box
         const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
 
+        // selecting the button
+        const btn = document.getElementById('giveButton') as HTMLDivElement;
+
         // tooltip will be set to display none when the amount is reached the limit
-        if (neededAmount == 0) {
+        if (neededAmount <= 0) {
             progressBar.style.width = 100 + '%';
             progressBar.style.backgroundColor = '#00be1c';
             tooltip.style.display = 'none';
+            btn.style.display = 'none';
         }
     }
 
@@ -66,13 +70,13 @@ export default function App() {
                     </div>
                 </div>
 
-                {/* all the elements are stored in this div */}
-                <div className='detail-container h-[17rem] w-96 border flex flex-col'>
+                {/* progress bar here */}
+                <div className='progress-bar-container w-96 h-5 border'>
+                    <div className='progress-bar bg-[#f15e33] w-48 h-4' id='progress-bar'></div>
+                </div>
 
-                    {/* progress bar here */}
-                    <div className='progress-bar-container w-96 h-5 border'>
-                        <div className='progress-bar bg-[#f15e33] w-10 h-5' id='progress-bar'></div>
-                    </div>
+                {/* all the elements are stored in this div */}
+                <div className='detail-container h-[17rem] w-96 border-x flex flex-col'>
 
                     {/* text blocks here */}
                     <div className='content flex flex-col ml-5 mt-10 h-40 justify-evenly'>
@@ -95,7 +99,7 @@ export default function App() {
                                 </div>
                             </div>
 
-                            <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' onClick={updateAmount}>Give Now</button>
+                            <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' onClick={updateAmount} id='giveButton'>Give Now</button>
 
                         </div>
 
