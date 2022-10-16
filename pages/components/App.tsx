@@ -42,9 +42,9 @@ export default function App() {
 
         // tooltip will be set to display none when the amount is reached the limit
         if (neededAmount == 0) {
-            tooltip.style.display = 'none';
             progressBar.style.width = 100 + '%';
             progressBar.style.backgroundColor = '#00be1c';
+            tooltip.style.display = 'none';
         }
     }
 
