@@ -47,6 +47,7 @@ export default function App() {
             return;
         }
 
+        // taking the sum of collected and donated amount
         let updatedAmounts = collectedAmount += amount.valueAsNumber;
 
         // progressBar width
@@ -55,11 +56,8 @@ export default function App() {
         // updating the needed amount 
         neededAmount -= amount.valueAsNumber;
 
-        // converting the numeric value into string
-        const convertedNumber = neededAmount.toString();
-
         // displaying the data
-        elem.innerHTML = convertedNumber;
+        elem.innerHTML = neededAmount.toString();
 
         // tooltip will be set to display none when the amount is reached the limit
         if (neededAmount <= 0) {
