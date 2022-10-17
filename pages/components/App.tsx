@@ -1,3 +1,4 @@
+import { exitCode } from "process";
 import Modal from "./Modal";
 
 
@@ -10,13 +11,17 @@ export default function App() {
     }
 
     // variable to store the needed amount so we can update it later 
-    let neededAmount = 167;
 
     // collected amount here
     let collectedAmount = 0;
 
+    let neededAmount = 167;
+
     // total amount here 
-    let totalAmount = 0;
+    let totalAmount = 200;
+
+    // assigning value to the collectedAmount
+    collectedAmount = totalAmount - neededAmount;
 
     // function to update the amount 
     function updateAmount() {
@@ -36,22 +41,19 @@ export default function App() {
         // selecting the button
         const btn = document.getElementById('giveButton') as HTMLDivElement;
 
-        // selecting the innerHTML to parse 
-        const value = elem.innerHTML;
+        // limiting the amount
+        if (amount.valueAsNumber > neededAmount) {
+            alert('You cannot donate more than $' + neededAmount);
+            return;
+        }
 
-        // updating the collected amount
-        collectedAmount = amount.valueAsNumber;
+        let updatedAmounts = collectedAmount += amount.valueAsNumber;
+
+        // progressBar width
+        progressBar.style.width = updatedAmounts / totalAmount * 100 + '%';
 
         // updating the needed amount 
-        neededAmount -= collectedAmount;
-
-        // updating the total amount
-        totalAmount += collectedAmount;
-
-        // progress bar width
-        progressBar.style.width = totalAmount / neededAmount * 100 + '%';
-
-        console.log(totalAmount / neededAmount * 100);
+        neededAmount -= amount.valueAsNumber;
 
         // converting the numeric value into string
         const convertedNumber = neededAmount.toString();
@@ -87,11 +89,11 @@ export default function App() {
 
                 {/* progress bar here */}
                 <div className='progress-bar-container w-96 h-5 border'>
-                    <div className='progress-bar bg-[#f15e33] w-0 h-4' id='progress-bar'></div>
+                    <div className='progress-bar bg-[#f15e33] w-0 h-[1.1rem] transition-1s' id='progress-bar'></div>
                 </div>
 
                 {/* all the elements are stored in this div */}
-                <div className='detail-container h-[17rem] w-96 border-x flex flex-col'>
+                <div className='detail-container h-[17rem] w-96 border-x flex flex-col border-b'>
 
                     {/* text blocks here */}
                     <div className='content flex flex-col ml-5 mt-10 h-40 justify-evenly'>
