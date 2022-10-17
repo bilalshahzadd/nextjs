@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Modal from "./Modal";
 
 
@@ -13,6 +12,12 @@ export default function App() {
     // variable to store the needed amount so we can update it later 
     let neededAmount = 167;
 
+    // collected amount here
+    let collectedAmount = 0;
+
+    // total amount here 
+    let totalAmount = 0;
+
     // function to update the amount 
     function updateAmount() {
 
@@ -21,18 +26,6 @@ export default function App() {
 
         // selecting the element to update the value
         const elem = document.getElementById('neededAmount') as HTMLSpanElement;
-
-        // selecting the innerHTML to parse 
-        const value = elem.innerHTML;
-
-        // updating the amount 
-        neededAmount -= amount.valueAsNumber;
-
-        // converting the numeric value into string
-        const convertedNumber = neededAmount.toString();
-
-        // displaying the data
-        elem.innerHTML = convertedNumber;
 
         // moving the progression bar
         const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
@@ -43,9 +36,31 @@ export default function App() {
         // selecting the button
         const btn = document.getElementById('giveButton') as HTMLDivElement;
 
+        // selecting the innerHTML to parse 
+        const value = elem.innerHTML;
+
+        // updating the collected amount
+        collectedAmount = amount.valueAsNumber;
+
+        // updating the needed amount 
+        neededAmount -= collectedAmount;
+
+        // updating the total amount
+        totalAmount += collectedAmount;
+
+        // progress bar width
+        progressBar.style.width = totalAmount / neededAmount * 100 + '%';
+
+        console.log(totalAmount / neededAmount * 100);
+
+        // converting the numeric value into string
+        const convertedNumber = neededAmount.toString();
+
+        // displaying the data
+        elem.innerHTML = convertedNumber;
+
         // tooltip will be set to display none when the amount is reached the limit
         if (neededAmount <= 0) {
-            progressBar.style.width = 100 + '%';
             progressBar.style.backgroundColor = '#00be1c';
             tooltip.style.display = 'none';
             btn.style.display = 'none';
@@ -72,7 +87,7 @@ export default function App() {
 
                 {/* progress bar here */}
                 <div className='progress-bar-container w-96 h-5 border'>
-                    <div className='progress-bar bg-[#f15e33] w-48 h-4' id='progress-bar'></div>
+                    <div className='progress-bar bg-[#f15e33] w-0 h-4' id='progress-bar'></div>
                 </div>
 
                 {/* all the elements are stored in this div */}
@@ -95,7 +110,7 @@ export default function App() {
                                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                         <span className="text-gray-500 sm:text-sm">$</span>
                                     </div>
-                                    <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border rounded apperance" />
+                                    <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance" />
                                 </div>
                             </div>
 
