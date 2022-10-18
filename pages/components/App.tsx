@@ -12,18 +12,21 @@ export default function App() {
     // variable to store the needed amount so we can update it later 
 
     // collected amount here
-    let collectedAmount = 0;
+    let collectedAmount: number = 0;
 
-    let neededAmount = 167;
+    let neededAmount: number = 167;
 
     // total amount here 
-    let totalAmount = 200;
+    let totalAmount: number = 200;
 
     // assigning value to the collectedAmount
     collectedAmount = totalAmount - neededAmount;
 
     // function to update the amount 
-    function updateAmount() {
+    function updateAmount(event: React.ChangeEvent<HTMLFormElement>) {
+
+        // preventing form from reloading the page after submit
+        event.preventDefault();
 
         // selecting the html input value
         const amount = document.getElementById('amount') as HTMLInputElement;
@@ -86,7 +89,7 @@ export default function App() {
 
                 {/* progress bar here */}
                 <div className='progress-bar-container w-96 h-5 border'>
-                    <div className='progress-bar bg-[#f15e33] w-0 h-[1.1rem] transition-1s' id='progress-bar'></div>
+                    <div className='progress-bar bg-[#f15e33] w-0 h-[1.1rem] transition-all' id='progress-bar'></div>
                 </div>
 
                 {/* all the elements are stored in this div */}
@@ -106,14 +109,17 @@ export default function App() {
 
                             <div className='h-10 w-24'>
                                 <div className="relative rounded-md shadow-sm">
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <span className="text-gray-500 sm:text-sm">$</span>
-                                    </div>
-                                    <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance" />
+                                    <form onSubmit={updateAmount} className="flex w-96">
+                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <span className="text-gray-500 sm:text-sm">$</span>
+                                        </div>
+                                        <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 pr-12 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance" required />
+                                        <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' id='giveButton'>Give Now</button>
+                                    </form>
                                 </div>
                             </div>
 
-                            <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' onClick={updateAmount} id='giveButton'>Give Now</button>
+
 
                         </div>
 
