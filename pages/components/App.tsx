@@ -8,8 +8,6 @@ export default function App() {
         modal.classList.toggle('hidden');
     }
 
-    // variable to store the needed amount so we can update it later 
-
     // collected amount here
     let collectedAmount: number = 0;
 
@@ -18,6 +16,9 @@ export default function App() {
 
     // total amount here 
     let totalAmount: number = 200;
+
+    // donors
+    let donors = 42;
 
     // assigning value to the collectedAmount
     collectedAmount = totalAmount - neededAmount;
@@ -43,6 +44,9 @@ export default function App() {
         // selecting the button
         const btn = document.getElementById('giveButton') as HTMLDivElement;
 
+        // selecting the donor count
+        const donorCount = document.getElementById('donors') as HTMLSpanElement;
+
         // limiting the amount
         if (amount.valueAsNumber > neededAmount) {
             alert('You cannot donate more than $' + neededAmount);
@@ -58,8 +62,14 @@ export default function App() {
         // updating the needed amount 
         neededAmount -= amount.valueAsNumber;
 
-        // displaying the data
+        // displaying the needed amount
         elem.innerHTML = neededAmount.toString();
+
+        // updating the donor count
+        donors += 1;
+
+        // displaying the donor count
+        donorCount.innerHTML = donors.toString();
 
         // tooltip will be set to display none when the amount is reached the limit
         if (neededAmount <= 0) {
@@ -99,7 +109,7 @@ export default function App() {
 
                         <h1 className='text-[#828282]'><span className='text-[#f15e33] font-bold'>Only 3 days left </span>to fund this project.</h1>
 
-                        <p className='pt-4 text-[#828282]'>Join the 42 other donors who have
+                        <p className='pt-4 text-[#828282]'>Join the <span id="donors" className="font-bold">{donors}</span> other donors who have
                             already supported this project. Every
                             dollar helps.</p>
 
