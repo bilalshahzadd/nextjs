@@ -14,6 +14,7 @@ export default function App() {
     // collected amount here
     let collectedAmount: number = 0;
 
+    // needed amount here
     let neededAmount: number = 167;
 
     // total amount here 
@@ -51,7 +52,7 @@ export default function App() {
 
         // taking the sum of collected and donated amount
         let updatedAmounts = collectedAmount += amount.valueAsNumber;
-
+        
         // progressBar width
         progressBar.style.width = updatedAmounts / totalAmount * 100 + '%';
 
@@ -68,7 +69,6 @@ export default function App() {
             btn.style.display = 'none';
         }
     }
-
 
     return (
         <>
