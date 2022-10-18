@@ -17,8 +17,8 @@ export default function App() {
     // total amount here 
     let totalAmount: number = 200;
 
-    // donors
-    let donors = 42;
+    // donor count here
+    let donors: number = 42;
 
     // assigning value to the collectedAmount
     collectedAmount = totalAmount - neededAmount;
