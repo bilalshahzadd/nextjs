@@ -1,6 +1,5 @@
 import Modal from "./Modal";
 
-
 export default function App() {
 
     // function to toggle modal
@@ -51,10 +50,10 @@ export default function App() {
         }
 
         // taking the sum of collected and donated amount
-        let updatedAmounts = collectedAmount += amount.valueAsNumber;
-        
+        collectedAmount += amount.valueAsNumber;
+
         // progressBar width
-        progressBar.style.width = updatedAmounts / totalAmount * 100 + '%';
+        progressBar.style.width = collectedAmount / totalAmount * 100 + '%';
 
         // updating the needed amount 
         neededAmount -= amount.valueAsNumber;
@@ -118,8 +117,6 @@ export default function App() {
                                     </form>
                                 </div>
                             </div>
-
-
 
                         </div>
 
