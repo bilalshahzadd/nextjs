@@ -9,19 +9,19 @@ describe('Overall Test', () => {
 
     describe('type a amount', () => {
         it('should update the amount', () => {
-            cy.get('[id=amount]').type('10');
+            cy.get('[id=amount]').type(10);
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
-            cy.get('[id=amount]').type('20');
+            cy.get('[id=amount]').type(20);
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
-            cy.get('[id=amount]').type('30');
+            cy.get('[id=amount]').type(30);
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
-            cy.get('[id=amount]').type('7');
+            cy.get('[id=amount]').type(7);
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
-            cy.get('[id=amount]').type('50');
+            cy.get('[id=amount]').type(50);
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
         })
