@@ -136,7 +136,7 @@ export default function App() {
 
                         </div>
 
-                        <p className='pt-[1.5rem] italic text-[#44b3de] cursor-pointer' onClick={toggleModal}>Why Give 50$?</p>
+                        <p className='pt-[1.5rem] italic text-[#44b3de] cursor-pointer' id="modal" onClick={toggleModal}>Why Give 50$?</p>
 
                     </div>
 
