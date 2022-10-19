@@ -12,6 +12,18 @@ describe('Overall Test', () => {
             cy.get('[id=amount]').type('10');
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
+            cy.get('[id=amount]').type('20');
+            cy.get('[id=giveButton]').click();
+            cy.get('[id=amount]').type('{backspace}{backspace}');
+            cy.get('[id=amount]').type('30');
+            cy.get('[id=giveButton]').click();
+            cy.get('[id=amount]').type('{backspace}{backspace}');
+            cy.get('[id=amount]').type('7');
+            cy.get('[id=giveButton]').click();
+            cy.get('[id=amount]').type('{backspace}{backspace}');
+            cy.get('[id=amount]').type('50');
+            cy.get('[id=giveButton]').click();
+            cy.get('[id=amount]').type('{backspace}{backspace}');
         })
     });
 
@@ -35,7 +47,7 @@ describe('Overall Test', () => {
 
     describe('when the amount if completed', () => {
         it('tooltip should be disabled', () => {
-            cy.get('[id=amount]').type(157);
+            cy.get('[id=amount]').type(50);
             cy.get('[id=giveButton]').click();
         })
     })
