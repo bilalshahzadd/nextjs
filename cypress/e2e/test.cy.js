@@ -8,17 +8,41 @@ describe('Overall Test', () => {
     });
 
     describe('type a amount', () => {
-        it('should update the amount, it should update the donors as well', () => {
+        it('should update the amount', () => {
             cy.get('[id=amount]').type('10');
             cy.get('[id=giveButton]').click();
             cy.get('[id=amount]').type('{backspace}{backspace}');
         })
     });
 
+    describe('when you add amount', () => {
+        it('should update the donors', () => {
+            cy.get('[id=progress-bar]');
+        })
+    })
+
+    describe('when you add amount', () => {
+        it('should update the donors', () => {
+            cy.get('[id=donors]');
+        })
+    })
+
+    describe('when you add amount', () => {
+        it('should update the progression bar', () => {
+            cy.get('[id=progress-bar]');
+        })
+    })
+
     describe('when the amount if completed', () => {
-        it('tooltip should be disabled and progress bar should turn into green', () => {
+        it('tooltip should be disabled', () => {
             cy.get('[id=amount]').type(157);
             cy.get('[id=giveButton]').click();
+        })
+    })
+
+    describe('when the amount if completed', () => {
+        it('progressbar should turn green', () => {
+            cy.get('[id=progress-bar]');
         })
     })
 
