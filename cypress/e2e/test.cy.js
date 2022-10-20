@@ -29,12 +29,6 @@ describe('Overall Test', () => {
 
     describe('when you add amount', () => {
         it('should update the donors', () => {
-            cy.get('[id=progress-bar]');
-        })
-    })
-
-    describe('when you add amount', () => {
-        it('should update the donors', () => {
             cy.get('[id=donors]');
         })
     })
@@ -58,7 +52,7 @@ describe('Overall Test', () => {
         })
     })
 
-    describe('when you click', () => {
+    describe('when you click Why Give 50$', () => {
         it('should trigger the modal', () => {
             cy.get('[id=modal]').click();
         })
