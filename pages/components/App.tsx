@@ -1,4 +1,5 @@
-import Modal from "./Modal";
+import { useEffect } from 'react';
+import Modal from './Modal';
 
 export default function App() {
 
@@ -76,14 +77,59 @@ export default function App() {
         // displaying the donor count
         donorCount.innerHTML = donors.toString();
 
-        // tooltip will be set to display none when the amount is reached the limit
+        // 
         if (neededAmount <= 0) {
             progressBar.style.backgroundColor = '#00be1c';
             tooltip.style.display = 'none';
             btn.style.display = 'none';
         }
 
+        // data to store in the local storage
+        const data: object = {
+            'neededAmount': neededAmount,
+            'collectedAmount': collectedAmount,
+            'donorCount': parseInt(donorCount.innerHTML),
+            'ProgressBar': parseInt(progressBar.style.width)
+        };
+
+        // sending data into local storage
+        localStorage.setItem('items', JSON.stringify(data));
+
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+
+            // selecting html elements
+            const elem = document.getElementById('neededAmount') as HTMLSpanElement;
+            const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
+            const donorCount = document.getElementById('donors') as HTMLSpanElement;
+            const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
+            const btn = document.getElementById('giveButton') as HTMLDivElement;
+
+
+            // fetching data from local storage
+            let items: object = JSON.parse(localStorage.getItem('items'));
+
+            // assigning values to the variables
+            neededAmount = Object.values(items)[0];
+            collectedAmount = Object.values(items)[1];
+            donors = Object.values(items)[2];
+            progressBar.style.width = Object.values(items)[3] + '%';
+
+            // updating the html elements from local storage
+            elem.innerHTML = neededAmount.toString();
+            donorCount.innerHTML = donors.toString();
+
+            // tooltip will be set to display none when the amount is reached the limit
+            if (neededAmount <= 0) {
+                progressBar.style.backgroundColor = '#00be1c';
+                tooltip.style.display = 'none';
+                btn.style.display = 'none';
+            }
+        }
+    })
+
 
     return (
         <>
@@ -93,10 +139,10 @@ export default function App() {
                 {/* tooltip box */}
                 <div className='w-96 mb-3' id='tooltipBox'>
                     <div>
-                        <div className="mx-auto container px-4 py-4 bg-[#424242] rounded relative">
-                            <p className=" text-sm text-white pt-2 pb-2">$<span id='neededAmount' className="font-bold">{neededAmount}</span> still needed for this project</p>
-                            <svg className="absolute z-10  bottom-[-10px] " width={16} height={10} viewBox="0 0 16 10" fill="#424242" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 10L0 0L16 1.41326e-06L8 10Z" fill="#424242" />
+                        <div className='mx-auto container px-4 py-4 bg-[#424242] rounded relative'>
+                            <p className=' text-sm text-white pt-2 pb-2'>$<span id='neededAmount' className='font-bold'>{neededAmount}</span> still needed for this project</p>
+                            <svg className='absolute z-10  bottom-[-10px] ' width={16} height={10} viewBox='0 0 16 10' fill='#424242' xmlns='http://www.w3.org/2000/svg'>
+                                <path d='M8 10L0 0L16 1.41326e-06L8 10Z' fill='#424242' />
                             </svg>
                         </div>
                     </div>
@@ -115,7 +161,7 @@ export default function App() {
 
                         <h1 className='text-[#828282]'><span className='text-[#f15e33] font-bold'>Only 3 days left </span>to fund this project.</h1>
 
-                        <p className='pt-4 text-[#828282]'>Join the <span id="donors" className="font-bold">{donors}</span> other donors who have
+                        <p className='pt-4 text-[#828282]'>Join the <span id='donors' className='font-bold'>{donors}</span> other donors who have
                             already supported this project. Every
                             dollar helps.</p>
 
@@ -123,12 +169,12 @@ export default function App() {
                         <div className='buttonInput mt-5 flex flex-row items-center'>
 
                             <div className='h-10 w-24'>
-                                <div className="relative rounded-md shadow-sm">
-                                    <form onSubmit={updateAmount} className="flex w-96">
-                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <span className="text-gray-500 sm:text-sm font-bold">$</span>
+                                <div className='relative rounded-md shadow-sm'>
+                                    <form onSubmit={updateAmount} className='flex w-96'>
+                                        <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+                                            <span className='text-gray-500 sm:text-sm font-bold'>$</span>
                                         </div>
-                                        <input type="number" name="amount" id="amount" className="rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold" required />
+                                        <input type='number' name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required />
                                         <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' id='giveButton'>Give Now</button>
                                     </form>
                                 </div>
@@ -136,7 +182,7 @@ export default function App() {
 
                         </div>
 
-                        <p className='pt-[1.5rem] italic text-[#44b3de] cursor-pointer' id="modal" onClick={toggleModal}>Why Give 50$?</p>
+                        <p className='pt-[1.5rem] italic text-[#44b3de] cursor-pointer' id='modal' onClick={toggleModal}>Why Give 50$?</p>
 
                     </div>
 
