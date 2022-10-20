@@ -97,6 +97,7 @@ export default function App() {
 
     }
 
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
 
@@ -111,25 +112,29 @@ export default function App() {
             // fetching data from local storage
             let items: object = JSON.parse(localStorage.getItem('items'));
 
-            // assigning values to the variables
-            neededAmount = Object.values(items)[0];
-            collectedAmount = Object.values(items)[1];
-            donors = Object.values(items)[2];
-            progressBar.style.width = Object.values(items)[3] + '%';
+            if (!items) {
+                console.log("no items found");
+            } else {
+                // assigning values to the variables
+                neededAmount = Object.values(items)[0];
+                collectedAmount = Object.values(items)[1];
+                donors = Object.values(items)[2];
+                progressBar.style.width = Object.values(items)[3] + '%';
 
-            // updating the html elements from local storage
-            elem.innerHTML = neededAmount.toString();
-            donorCount.innerHTML = donors.toString();
+                // updating the html elements from local storage
+                elem.innerHTML = neededAmount.toString();
+                donorCount.innerHTML = donors.toString();
 
-            // tooltip will be set to display none when the amount is reached the limit
-            if (neededAmount <= 0) {
-                progressBar.style.backgroundColor = '#00be1c';
-                tooltip.style.display = 'none';
-                btn.style.display = 'none';
+                // tooltip will be set to display none when the amount is reached the limit
+                if (neededAmount <= 0) {
+                    progressBar.style.backgroundColor = '#00be1c';
+                    tooltip.style.display = 'none';
+                    btn.style.display = 'none';
+                }
             }
+
         }
     })
-
 
     return (
         <>
@@ -198,8 +203,6 @@ export default function App() {
 
             {/* modal here */}
             <Modal />
-
-
         </>
     )
 }
