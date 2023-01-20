@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Modal';
 
 export default function App() {
@@ -9,132 +9,66 @@ export default function App() {
         modal.classList.toggle('hidden');
     }
 
-    // collected amount here
-    let collectedAmount: number = 0;
-
-    // needed amount here
-    let neededAmount: number = 167;
-
-    // total amount here 
+    let [collectedAmount, setCollectedAmount] = useState(0);
+    let [neededAmount, setNeededAmount] = useState(167);
+    let [donors, setDonors] = useState(42);
+    let [progressWidth, setProgressWidth] = useState(0);
+    let [display, setDisplay] = useState('');
     let totalAmount: number = 167;
+    const items = localStorage.getItem('items');
 
-    // donor count here
-    let donors: number = 42;
-
-    // assigning value to the collectedAmount
-    collectedAmount = totalAmount - neededAmount;
+    useEffect(() => {
+        if (items) {
+            const parsedData = JSON.parse(items);
+            setNeededAmount(parsedData.neededAmount);
+            setCollectedAmount(parsedData.collectedAmount);
+            setDonors(parsedData.donors);
+            setProgressWidth(parsedData.ProgressBar);
+        } else {
+            return;
+        }
+    })
 
     // function to update the amount 
     function updateAmount(event: React.FormEvent<HTMLFormElement>) {
 
-        // preventing form from reloading the page after submit
+        // preventing page reload
         event.preventDefault();
 
         // selecting the html input value
         const amount = document.getElementById('amount') as HTMLInputElement;
 
-        // selecting the element to update the value
-        const elem = document.getElementById('neededAmount') as HTMLSpanElement;
-
-        // moving the progression bar
-        const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
-
-        // selecting the tooltip box
-        const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
-
-        // selecting the button
-        const btn = document.getElementById('giveButton') as HTMLDivElement;
-
-        // selecting the donor count
-        const donorCount = document.getElementById('donors') as HTMLSpanElement;
-
-        // limiting the amount
+        // function will not be exected if the amount is greater than the neededAmount
         if (amount.valueAsNumber > neededAmount) {
-            alert('You cannot donate more than $' + neededAmount);
+            alert("Sorry you cannot donate more than $" + neededAmount);
             return;
         }
 
-        // updating the donor count
-        if (amount.valueAsNumber == 0) {
-            alert('No amount detected');
+        // function will not be exected if the amount is less than 0
+        if (amount.valueAsNumber <= 0) {
+            alert("Sorry No Amount Detected");
             return;
-        } else {
-            donors += 1;
         }
 
-        // taking the sum of collected and donated amount
-        collectedAmount += amount.valueAsNumber;
+        setNeededAmount(neededAmount -= amount.valueAsNumber);
+        setCollectedAmount(collectedAmount += amount.valueAsNumber);
+        setDonors(donors += 1);
+        setProgressWidth(collectedAmount / totalAmount * 100);
 
-        // progressBar width
-        progressBar.style.width = collectedAmount / totalAmount * 100 + '%';
-
-        // updating the needed amount 
-        neededAmount -= amount.valueAsNumber;
-
-        // displaying the needed amount
-        elem.innerHTML = neededAmount.toString();
-
-        // displaying the donor count
-        donorCount.innerHTML = donors.toString();
-
-        // 
         if (neededAmount <= 0) {
-            progressBar.style.backgroundColor = '#00be1c';
-            tooltip.style.display = 'none';
-            btn.style.display = 'none';
+            setDisplay('hidden');
         }
 
-        // data to store in the local storage
         const data: object = {
             'neededAmount': neededAmount,
             'collectedAmount': collectedAmount,
-            'donorCount': parseInt(donorCount.innerHTML),
-            'ProgressBar': parseInt(progressBar.style.width)
+            'donors': donors,
+            'ProgressBar': progressWidth
         };
 
         // sending data into local storage
         localStorage.setItem('items', JSON.stringify(data));
-
     }
-
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-
-            // selecting html elements
-            const elem = document.getElementById('neededAmount') as HTMLSpanElement;
-            const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
-            const donorCount = document.getElementById('donors') as HTMLSpanElement;
-            const tooltip = document.getElementById('tooltipBox') as HTMLDivElement;
-            const btn = document.getElementById('giveButton') as HTMLDivElement;
-
-
-            // fetching data from local storage
-            let items: object = JSON.parse(localStorage.getItem('items'));
-
-            if (!items) {
-                console.log("no items found");
-            } else {
-                // assigning values to the variables
-                neededAmount = Object.values(items)[0];
-                collectedAmount = Object.values(items)[1];
-                donors = Object.values(items)[2];
-                progressBar.style.width = Object.values(items)[3] + '%';
-
-                // updating the html elements from local storage
-                elem.innerHTML = neededAmount.toString();
-                donorCount.innerHTML = donors.toString();
-
-                // tooltip will be set to display none when the amount is reached the limit
-                if (neededAmount <= 0) {
-                    progressBar.style.backgroundColor = '#00be1c';
-                    tooltip.style.display = 'none';
-                    btn.style.display = 'none';
-                }
-            }
-
-        }
-    })
 
     return (
         <>
@@ -142,7 +76,7 @@ export default function App() {
             <div className='flex flex-col justify-center items-center h-screen'>
 
                 {/* tooltip box */}
-                <div className='w-96 mb-3' id='tooltipBox'>
+                <div className={`w-96 mb-3 ${display}`} id='tooltipBox'>
                     <div>
                         <div className='mx-auto container px-4 py-4 bg-[#424242] rounded relative'>
                             <p className=' text-sm text-white pt-2 pb-2'>$<span id='neededAmount' className='font-bold'>{neededAmount}</span> still needed for this project</p>
@@ -155,7 +89,7 @@ export default function App() {
 
                 {/* progress bar here */}
                 <div className='progress-bar-container w-96 h-5 border'>
-                    <div className='progress-bar bg-[#f15e33] w-0 h-[1.1rem] transition-all' id='progress-bar'></div>
+                    <div className={`progress-bar bg-[#f15e33] w-[${progressWidth + '%'}] h-[1.1rem] transition-all`} id='progress-bar'></div>
                 </div>
 
                 {/* all the elements are stored in this div */}
@@ -179,8 +113,8 @@ export default function App() {
                                         <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                                             <span className='text-gray-500 sm:text-sm font-bold'>$</span>
                                         </div>
-                                        <input type='number' name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required />
-                                        <button className='btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded' id='giveButton'>Give Now</button>
+                                        <input type='number' min={0} name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required />
+                                        <button className={`btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded ${display}`} id='giveButton'>Give Now</button>
                                     </form>
                                 </div>
                             </div>
