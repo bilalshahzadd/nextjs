@@ -15,9 +15,9 @@ export default function App() {
     let [progressWidth, setProgressWidth] = useState(0);
     let [display, setDisplay] = useState('');
     let totalAmount: number = 167;
-    const items = localStorage.getItem('items');
 
     useEffect(() => {
+        const items = localStorage.getItem('items');
         if (items) {
             const parsedData = JSON.parse(items);
             setNeededAmount(parsedData.neededAmount);
@@ -72,10 +72,8 @@ export default function App() {
 
     return (
         <>
-            {/* main div */}
             <div className='flex flex-col justify-center items-center h-screen'>
 
-                {/* tooltip box */}
                 <div className={`w-96 mb-3 ${display}`} id='tooltipBox'>
                     <div>
                         <div className='mx-auto container px-4 py-4 bg-[#424242] rounded relative'>
@@ -87,15 +85,12 @@ export default function App() {
                     </div>
                 </div>
 
-                {/* progress bar here */}
                 <div className='progress-bar-container w-96 h-5 border'>
                     <div className={`progress-bar bg-[#f15e33] w-[${progressWidth + '%'}] h-[1.1rem] transition-all`} id='progress-bar'></div>
                 </div>
 
-                {/* all the elements are stored in this div */}
                 <div className='detail-container h-[15.5rem] w-96 border-x flex flex-col border-b'>
 
-                    {/* text blocks here */}
                     <div className='content flex flex-col ml-5 mt-10 h-40 justify-evenly'>
 
                         <h1 className='text-[#828282]'><span className='text-[#f15e33] font-bold'>Only 3 days left </span>to fund this project.</h1>
@@ -104,7 +99,6 @@ export default function App() {
                             already supported this project. Every
                             dollar helps.</p>
 
-                        {/* button and input */}
                         <div className='buttonInput mt-5 flex flex-row items-center'>
 
                             <div className='h-10 w-24'>
@@ -127,7 +121,6 @@ export default function App() {
 
                 </div>
 
-                {/* buttons */}
                 <div className='flex mt-4'>
                     <button className='pl-9 pr-9 pt-2 pb-2 bg-[#fafafa] text-[#777777] mx-1 border rounded font-bold'>Save for later</button>
                     <button className='pl-9 pr-9 pt-2 pb-2 bg-[#fafafa] text-[#777777] mx-1 border rounded font-bold'>Tell your friends</button>
@@ -135,7 +128,6 @@ export default function App() {
 
             </div>
 
-            {/* modal here */}
             <Modal />
         </>
     )
