@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 
-export default function App() {
-
-    // function to toggle modal
+const App = () => {
     function toggleModal() {
         const modal = document.getElementById('infoModal') as HTMLDivElement;
         modal.classList.toggle('hidden');
     }
 
+    let totalAmount: number = 167;
     let [collectedAmount, setCollectedAmount] = useState(0);
     let [neededAmount, setNeededAmount] = useState(167);
     let [donors, setDonors] = useState(42);
-    let [progressWidth, setProgressWidth] = useState(0);
     let [display, setDisplay] = useState('');
-    let totalAmount: number = 167;
+    let progressbar: HTMLDivElement;
+
+    if (typeof window !== 'undefined') {
+        progressbar = document.querySelector('#progress-bar') as HTMLDivElement;
+    }
 
     useEffect(() => {
         const items = localStorage.getItem('items');
@@ -23,19 +25,14 @@ export default function App() {
             setNeededAmount(parsedData.neededAmount);
             setCollectedAmount(parsedData.collectedAmount);
             setDonors(parsedData.donors);
-            setProgressWidth(parsedData.ProgressBar);
-        } else {
-            return;
+            progressbar.style.width = parsedData.progressbar;
+            if (parsedData.neededAmount <= 0) {
+                setDisplay('hidden');
+            }
         }
-    })
+    }, [])
 
-    // function to update the amount 
-    function updateAmount(event: React.FormEvent<HTMLFormElement>) {
-
-        // preventing page reload
-        event.preventDefault();
-
-        // selecting the html input value
+    const updateAmount = () => {
         const amount = document.getElementById('amount') as HTMLInputElement;
 
         // function will not be exected if the amount is greater than the neededAmount
@@ -50,10 +47,11 @@ export default function App() {
             return;
         }
 
+        // updating elements
         setNeededAmount(neededAmount -= amount.valueAsNumber);
         setCollectedAmount(collectedAmount += amount.valueAsNumber);
         setDonors(donors += 1);
-        setProgressWidth(collectedAmount / totalAmount * 100);
+        progressbar.style.width = collectedAmount / totalAmount * 100 + '%';
 
         if (neededAmount <= 0) {
             setDisplay('hidden');
@@ -63,7 +61,7 @@ export default function App() {
             'neededAmount': neededAmount,
             'collectedAmount': collectedAmount,
             'donors': donors,
-            'ProgressBar': progressWidth
+            'progressbar': progressbar.style.width
         };
 
         // sending data into local storage
@@ -73,7 +71,6 @@ export default function App() {
     return (
         <>
             <div className='flex flex-col justify-center items-center h-screen'>
-
                 <div className={`w-96 mb-3 ${display}`} id='tooltipBox'>
                     <div>
                         <div className='mx-auto container px-4 py-4 bg-[#424242] rounded relative'>
@@ -85,8 +82,9 @@ export default function App() {
                     </div>
                 </div>
 
-                <div className='progress-bar-container w-96 h-5 border'>
-                    <div className={`progress-bar bg-[#f15e33] w-[${progressWidth + '%'}] h-[1.1rem] transition-all`} id='progress-bar'></div>
+                {/* progress bar container */}
+                <div className='h-5 border w-96'>
+                    <div className='progress-bar bg-[#f15e33] w-[0%] h-[1.1rem] transition-all' id='progress-bar'></div>
                 </div>
 
                 <div className='detail-container h-[15.5rem] w-96 border-x flex flex-col border-b'>
@@ -103,13 +101,13 @@ export default function App() {
 
                             <div className='h-10 w-24'>
                                 <div className='relative rounded-md shadow-sm'>
-                                    <form onSubmit={updateAmount} className='flex w-96'>
+                                    <div className='flex w-96'>
                                         <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                                             <span className='text-gray-500 sm:text-sm font-bold'>$</span>
                                         </div>
                                         <input type='number' min={0} name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required />
-                                        <button className={`btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded ${display}`} id='giveButton'>Give Now</button>
-                                    </form>
+                                        <button className={`btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded ${display}`} id='giveButton' onClick={updateAmount}>Give Now</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -128,7 +126,9 @@ export default function App() {
 
             </div>
 
-            <Modal />
+            <Modal heading="Donate an Amount" body="Some random information about the app ...." />
         </>
     )
 }
+
+export default App
