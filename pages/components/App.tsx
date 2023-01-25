@@ -40,6 +40,12 @@ const App = () => {
     const updateAmount = () => {
         const amount = document.getElementById('amount') as HTMLInputElement;
 
+        // function to check amount
+        if (!amount.valueAsNumber) {
+            alert("Sorry No Amount Detected");
+            return;
+        }
+
         // function will not be exected if the amount is greater than the neededAmount
         if (amount.valueAsNumber > neededAmount) {
             alert("Sorry you cannot donate more than $" + neededAmount);
