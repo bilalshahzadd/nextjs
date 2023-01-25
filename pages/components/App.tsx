@@ -10,6 +10,7 @@ const App = () => {
     let totalAmount: number = 167;
     let [collectedAmount, setCollectedAmount] = useState(0);
     let [neededAmount, setNeededAmount] = useState(167);
+    let [value, setValue] = useState(0);
     let [donors, setDonors] = useState(42);
     let [display, setDisplay] = useState('');
     let progressbar: HTMLDivElement;
@@ -31,6 +32,10 @@ const App = () => {
             }
         }
     }, [])
+
+    const handleOnChange = (event: any) => {
+        setValue(event.target.value);
+    }
 
     const updateAmount = () => {
         const amount = document.getElementById('amount') as HTMLInputElement;
@@ -105,7 +110,7 @@ const App = () => {
                                         <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
                                             <span className='text-gray-500 sm:text-sm font-bold'>$</span>
                                         </div>
-                                        <input type='number' min={0} name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required />
+                                        <input type='number' min={0} name='amount' id='amount' className='rounded border-gray-300 pl-7 focus:border- focus:ring-indigo-500 sm:text-sm h-10 w-24 border apperance font-bold' required value={value} onChange={handleOnChange} />
                                         <button className={`btn-primary border h-10 text-center mx-2 w-24 bg-[#00be1c] text-white rounded ${display}`} id='giveButton' onClick={updateAmount}>Give Now</button>
                                     </div>
                                 </div>
