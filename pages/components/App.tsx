@@ -92,7 +92,6 @@ const App = () => {
                 <div className='h-5 border w-96'>
                     <div className='progress-bar bg-[#f15e33] w-[0%] h-[1.1rem] transition-all' id='progress-bar'></div>
                 </div>
-
                 <div className='detail-container h-[15.5rem] w-96 border-x flex flex-col border-b'>
 
                     <div className='content flex flex-col ml-5 mt-10 h-40 justify-evenly'>
